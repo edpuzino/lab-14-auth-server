@@ -43,7 +43,7 @@ const authorize = (req) => {
         });
     })
     .then(googleUser => {
-      console.log('(4) Creating Account')
+      console.log('(4) Creating Account');
       return User.createFromOAuth(googleUser);
     })
     .then (user => {
