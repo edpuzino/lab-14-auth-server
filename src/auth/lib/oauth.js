@@ -42,9 +42,11 @@ const authorize = (req) => {
           return user;
         });
     })
+
     .then(facebookUser => {
       console.log('(4) Creating Account')
       return User.createFromOAuth(facebookUser);
+
     })
     .then (user => {
       console.log('(5) Created User, generating token');
