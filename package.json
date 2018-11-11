@@ -39,5 +39,6 @@
   "bugs": {
     "url": "https://github.com/edpuzino/lab-14-auth-server/issues"
   },
-  "homepage": "https://github.com/edpuzino/lab-14-auth-server#readme"
+  "homepage": "https://github.com/edpuzino/lab-14-auth-server#readme",
+  "devDependencies": {}
 }
