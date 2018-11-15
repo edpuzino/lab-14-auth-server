@@ -8,13 +8,13 @@ const userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   email: {type: String},
-  role: {type: String, required:true, default:'user', enum:['admin','editor','user'] }
+  role: {type: String, required:true, default:'user', enum:['admin','editor','user'] },
 });
 
 const capabilities = {
   user: ['read'],
   editor: ['read','update'],
-  admin: ['create','read', 'update', 'delete']
+  admin: ['create','read', 'update', 'delete'],
 };
 
 // Before we save, hash the plain text password
@@ -85,7 +85,7 @@ userSchema.methods.comparePassword = function(password) {
 userSchema.methods.generateToken = function() {
   let tokenData = {
     id:this._id,
-    capabilities: capabilities[this.role]
+    capabilities: capabilities[this.role],
   };
   return jwt.sign(tokenData, process.env.SECRET || 'changeit' );
 };
