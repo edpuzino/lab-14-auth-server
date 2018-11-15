@@ -18,14 +18,25 @@ const authorize = (req) => {
   console.log('(1) code', code);
 
   // exchange the code or a token
-  return superagent.post('https://graph.facebook.com/v3.2/oauth/access_token')
-    //.type('form')
+  /*
+  return superagent.post
+  ('https://www.googleapis.com/oauth2/v4/token')
+  .type('form')
+  .send({
+    code: code,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+    redirect_uri: `${process.env.API_URL}/oauth`,
+    grant_type: 'authorization_code',
+  })
+  */
+  return superagent.post  ('https://graph.facebook.com/v3.2/oauth/access_token')
     .send({
-      code: code-parameter,
-      client_id: process.env.MyControl1.ClientID,
-      client_secret: app-secret,
-      redirect_uri: `${process.env.API_URL}/oauth`,
-      grant_type: 'client_credentials',
+      client_id: '193638651565478',
+      client_secret: '128cf6dfb681d5845a380119a60a7cf0',
+      redirect_uri: 'https://www.facebook.com/connect/login_success.html',
+      code: code,
+      fbtrace_id: 'AWVhaQonqF0'
     })
     .then( response => {
       let facebookToken = response.body.access_token;
@@ -34,7 +45,7 @@ const authorize = (req) => {
     })
   // use the token to get a user
     .then ( token => {
-      return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+      return superagent.get('https://graph.facebook.com/debug_token')
         .set('Authorization', `Bearer ${token}`)
         .then (response => {
           let user = response.body;
@@ -44,7 +55,7 @@ const authorize = (req) => {
     })
 
     .then(facebookUser => {
-      console.log('(4) Creating Account')
+      console.log('(4) Creating Account');
       return User.createFromOAuth(facebookUser);
 
     })
